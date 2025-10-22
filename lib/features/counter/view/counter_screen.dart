@@ -9,27 +9,30 @@ class CounterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = context.watch<CounterController>();
-    final themeController = context.watch<ThemeController>();
-
-    if (controller.isLoading) {
-      return const Scaffold(body: Center(child: CircularProgressIndicator()));
-    }
+    final counter = context.watch<CounterController>();
+    final theme = context.watch<ThemeController>();
 
     return Scaffold(
-      body: Center(child: CounterNumber(value: controller.count)),
+      body: Center(
+        child:
+            counter.isLoading
+                ? const CircularProgressIndicator()
+                : CounterNumber(value: counter.count),
+      ),
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
+          if (!counter.isLoading) ...[
+            FloatingActionButton(
+              onPressed: counter.increment,
+              child: const Icon(Icons.add),
+            ),
+            const SizedBox(width: 20),
+          ],
           FloatingActionButton(
-            onPressed: controller.increment,
-            child: const Icon(Icons.add),
-          ),
-          const SizedBox(width: 20.0),
-          FloatingActionButton(
-            onPressed: themeController.toggleTheme,
+            onPressed: theme.toggleTheme,
             child: Icon(
-              themeController.themeMode == ThemeMode.dark
+              theme.themeMode == ThemeMode.dark
                   ? Icons.light_mode
                   : Icons.dark_mode,
             ),
