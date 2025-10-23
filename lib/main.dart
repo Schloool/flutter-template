@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_template/core/firebase/auth/controller/auth_controller.dart';
+import 'package:flutter_template/core/firebase/auth/service/firebase_auth_service.dart';
+import 'package:flutter_template/core/firebase/firebase_initializer.dart';
+import 'package:flutter_template/core/firebase/firestore/firestore_initializer.dart';
 import 'package:flutter_template/core/theme/theme_controller.dart';
 import 'package:flutter_template/features/counter/repository/local_counter_repository.dart';
 import 'package:flutter_template/features/counter/service/counter_service.dart';
@@ -12,22 +16,32 @@ import 'features/counter/controller/counter_controller.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
+  final firebaseApp = await FirebaseInitializer.init(enable: true);
+
+  if (firebaseApp != null) {
+    await FirestoreInitializer.setup(useEmulator: true);
+  }
 
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(
+        ChangeNotifierProvider<FirebaseAuthController>(
+          create: (_) {
+            return FirebaseAuthController(FirebaseAuthService());
+          },
+        ),
+        ChangeNotifierProvider<ThemeController>(
           create: (_) {
             return ThemeController()..loadThemeMode();
           },
         ),
-        ChangeNotifierProvider(
+        ChangeNotifierProvider<LocaleController>(
           create: (_) {
             return LocaleController()..loadLocale();
           },
         ),
 
-        ChangeNotifierProvider(
+        ChangeNotifierProvider<CounterController>(
           create: (_) {
             return CounterController(LocalCounterRepository(CounterService()))
               ..loadInitialCount();
