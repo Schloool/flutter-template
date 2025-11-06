@@ -22,7 +22,7 @@ class CounterScreen extends StatelessWidget {
                 : Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    CounterNumber(value: counter.count),
+                    CounterNumber(value: counter.data?.count ?? 0),
                     const SizedBox(height: 20.0),
                     Text(S.of(context).appTitle),
                   ],

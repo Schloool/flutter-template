@@ -1,32 +1,24 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_template/features/counter/model/counter_model.dart';
 import 'package:flutter_template/features/counter/repository/counter_repository.dart';
+import 'package:flutter_template/shared/base_controller.dart';
 
-class CounterController extends ChangeNotifier {
+class CounterController extends BaseController<CounterModel> {
   CounterController(this._repository);
 
   final CounterRepository _repository;
-  CounterModel? _model;
-  bool _isLoading = false;
-
-  bool get isLoading => _isLoading;
-  int get count => _model?.count ?? 0;
 
   Future<void> loadInitialCount() async {
-    _isLoading = true;
-    notifyListeners();
+    setLoading(true, notify: true);
 
     final initialCount = await _repository.getInitialCount();
-    _model = CounterModel(initialCount);
+    setData(CounterModel(initialCount));
 
-    _isLoading = false;
-    notifyListeners();
+    setLoading(false, notify: true);
   }
 
   void increment() {
-    if (_model == null) return;
+    if (data == null) return;
 
-    _model = _model!.increment();
-    notifyListeners();
+    setData(data!.increment(), notify: true);
   }
 }

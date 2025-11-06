@@ -22,7 +22,7 @@ void main() {
 
     await controller.loadInitialCount();
 
-    expect(controller.count, 5);
+    expect(controller.data?.value, 5);
     expect(states, [true, false]);
   });
 
@@ -32,6 +32,6 @@ void main() {
 
     controller.increment();
 
-    expect(controller.count, 1);
+    expect(controller.data?.value, 1);
   });
 }
