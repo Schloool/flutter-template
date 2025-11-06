@@ -8,17 +8,17 @@ class CounterController extends BaseController<CounterModel> {
   final CounterRepository _repository;
 
   Future<void> loadInitialCount() async {
-    setLoading(true, notify: true);
+    setLoading(true);
 
     final initialCount = await _repository.getInitialCount();
-    setData(CounterModel(initialCount));
+    setData(CounterModel(initialCount), notify: false);
 
-    setLoading(false, notify: true);
+    setLoading(false);
   }
 
   void increment() {
     if (data == null) return;
 
-    setData(data!.increment(), notify: true);
+    setData(data!.increment());
   }
 }

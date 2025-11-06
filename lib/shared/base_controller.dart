@@ -9,7 +9,7 @@ abstract class BaseController<T> extends ChangeNotifier {
   String? get error => _error;
   T? get data => _data;
 
-  void setLoading(bool value, {bool notify = false}) {
+  void setLoading(bool value, {bool notify = true}) {
     _isLoading = value;
 
     if (notify) {
@@ -17,7 +17,7 @@ abstract class BaseController<T> extends ChangeNotifier {
     }
   }
 
-  void setError(String? value, {bool notify = false}) {
+  void setError(String? value, {bool notify = true}) {
     _error = value;
 
     if (notify) {
@@ -25,7 +25,7 @@ abstract class BaseController<T> extends ChangeNotifier {
     }
   }
 
-  void setData(T? value, {bool notify = false}) {
+  void setData(T? value, {bool notify = true}) {
     _data = value;
 
     if (notify) {
