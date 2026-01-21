@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_template/core/firebase/auth/service/auth_service.dart';
 
-import '../../../util/logger.dart';
+import '../../../../shared/logger.dart';
 
 class FirebaseAuthController extends ChangeNotifier {
   FirebaseAuthController(this._authService) {
@@ -38,7 +38,7 @@ class FirebaseAuthController extends ChangeNotifier {
     try {
       await _authService.signInWithEmail(email, password);
     } on FirebaseAuthException catch (e) {
-      debugPrint('SignIn failed: ${e.message}');
+      logger.e('Sign in failed: ${e.message}');
       rethrow;
     }
   }

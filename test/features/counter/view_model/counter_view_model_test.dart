@@ -1,17 +1,17 @@
-import 'package:flutter_template/features/counter/controller/counter_controller.dart';
 import 'package:flutter_template/features/counter/repository/counter_repository.dart';
+import 'package:flutter_template/features/counter/view_model/counter_view_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockCounterRepository extends Mock implements CounterRepository {}
 
 void main() {
-  late CounterController controller;
+  late CounterViewModel controller;
   late MockCounterRepository repository;
 
   setUp(() {
     repository = MockCounterRepository();
-    controller = CounterController(repository);
+    controller = CounterViewModel(repository);
   });
 
   test('loadInitialCount loads initial value and updates isLoading', () async {

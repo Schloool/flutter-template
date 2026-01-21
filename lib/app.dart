@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_template/core/i10n/locale_controller.dart';
+import 'package:flutter_template/core/i10n/locale_view_model.dart';
 import 'package:provider/provider.dart';
 
 import 'core/theme/app_theme.dart';
-import 'core/theme/theme_controller.dart';
+import 'core/theme/theme_view_model.dart';
 import 'features/counter/view/counter_screen.dart';
 import 'generated/l10n.dart';
 
@@ -16,7 +16,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeController = context.watch<ThemeController>();
-    final locale = context.watch<LocaleController>();
+    final locale = context.watch<LocaleViewModel>();
 
     return MaterialApp(
       title: appName,

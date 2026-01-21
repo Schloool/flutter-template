@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 
 class ThemeController extends ChangeNotifier {
+  ThemeController(this._storage);
+
   static const isDarkModeKey = 'is_dark_mode';
 
-  final _storage = GetStorage();
+  final GetStorage _storage;
 
   ThemeMode _themeMode = ThemeMode.system;
 

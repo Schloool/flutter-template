@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_template/features/counter/controller/counter_controller.dart';
 import 'package:flutter_template/features/counter/view/counter_screen.dart';
+import 'package:flutter_template/features/counter/view_model/counter_view_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../../util/mock_helpers.dart';
 
 void main() {
-  late CounterController controller;
+  late CounterViewModel controller;
 
   setUp(() async {
-    controller = CounterController(FakeCounterRepository());
+    controller = CounterViewModel(FakeCounterRepository());
     await controller.loadInitialCount();
   });
 

@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 
-abstract class BaseController<T> extends ChangeNotifier {
+abstract class BaseViewModel<T> extends ChangeNotifier {
   bool _isLoading = false;
   String? _error;
   T? _data;

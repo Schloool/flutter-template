@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_template/app.dart';
 import 'package:flutter_template/core/firebase/auth/controller/auth_controller.dart';
 import 'package:flutter_template/core/firebase/auth/service/firebase_auth_service.dart';
 import 'package:flutter_template/core/firebase/firebase_initializer.dart';
 import 'package:flutter_template/core/firebase/firestore/firestore_initializer.dart';
-import 'package:flutter_template/core/theme/theme_controller.dart';
+import 'package:flutter_template/core/i10n/locale_view_model.dart';
+import 'package:flutter_template/core/theme/theme_view_model.dart';
 import 'package:flutter_template/features/counter/repository/local_counter_repository.dart';
 import 'package:flutter_template/features/counter/service/counter_service.dart';
+import 'package:flutter_template/features/counter/view_model/counter_view_model.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
-
-import 'app.dart';
-import 'core/i10n/locale_controller.dart';
-import 'features/counter/controller/counter_controller.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,6 +20,8 @@ void main() async {
   if (firebaseApp != null) {
     await FirestoreInitializer.setup(useEmulator: true);
   }
+
+  final getStorage = GetStorage();
 
   runApp(
     MultiProvider(
@@ -32,18 +33,18 @@ void main() async {
         ),
         ChangeNotifierProvider<ThemeController>(
           create: (_) {
-            return ThemeController()..loadThemeMode();
+            return ThemeController(getStorage)..loadThemeMode();
           },
         ),
-        ChangeNotifierProvider<LocaleController>(
+        ChangeNotifierProvider<LocaleViewModel>(
           create: (_) {
-            return LocaleController()..loadLocale();
+            return LocaleViewModel(getStorage)..loadLocale();
           },
         ),
 
-        ChangeNotifierProvider<CounterController>(
+        ChangeNotifierProvider<CounterViewModel>(
           create: (_) {
-            return CounterController(LocalCounterRepository(CounterService()))
+            return CounterViewModel(LocalCounterRepository(CounterService()))
               ..loadInitialCount();
           },
         ),

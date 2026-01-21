@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 
-class LocaleController extends ChangeNotifier {
+class LocaleViewModel extends ChangeNotifier {
+  LocaleViewModel(this._storage);
+
   static const _langCodeKey = 'lang_code';
-  final _storage = GetStorage();
+
+  final GetStorage _storage;
 
   Locale? _locale;
 

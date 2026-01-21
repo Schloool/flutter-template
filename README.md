@@ -1,16 +1,11 @@
 # flutter_template
 
-A new Flutter project.
+Template for new Flutter projects, providing a basic setup for MVVM-ish apps, combined with best 
+practices for data fetching, theming and linting.
 
-## Getting Started
+## Compatibility
 
-This project is a starting point for a Flutter application.
+Currently tested for
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Flutter 3.38.3
+- Dart 3.10.1

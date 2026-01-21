@@ -1,9 +1,9 @@
 import 'package:flutter_template/features/counter/model/counter_model.dart';
 import 'package:flutter_template/features/counter/repository/counter_repository.dart';
-import 'package:flutter_template/shared/base_controller.dart';
+import 'package:flutter_template/shared/base_view_model.dart';
 
-class CounterController extends BaseController<CounterModel> {
-  CounterController(this._repository);
+class CounterViewModel extends BaseViewModel<CounterModel> {
+  CounterViewModel(this._repository);
 
   final CounterRepository _repository;
 

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_template/core/i10n/locale_controller.dart';
-import 'package:flutter_template/core/theme/theme_controller.dart';
-import 'package:flutter_template/features/counter/controller/counter_controller.dart';
+import 'package:flutter_template/core/i10n/locale_view_model.dart';
+import 'package:flutter_template/core/theme/theme_view_model.dart';
 import 'package:flutter_template/features/counter/view/counter_number.dart';
+import 'package:flutter_template/features/counter/view_model/counter_view_model.dart';
 import 'package:flutter_template/generated/l10n.dart';
 import 'package:provider/provider.dart';
 
@@ -11,7 +11,7 @@ class CounterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final counter = context.watch<CounterController>();
+    final counter = context.watch<CounterViewModel>();
     final theme = context.watch<ThemeController>();
 
     return Scaffold(
@@ -48,7 +48,7 @@ class CounterScreen extends StatelessWidget {
           ),
           const SizedBox(width: 20),
           FloatingActionButton(
-            onPressed: context.read<LocaleController>().toggleLocale,
+            onPressed: context.read<LocaleViewModel>().toggleLocale,
             child: const Icon(Icons.language),
           ),
         ],

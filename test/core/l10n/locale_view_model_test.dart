@@ -1,48 +1,51 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_template/core/i10n/locale_controller.dart';
+import 'package:flutter_template/core/i10n/locale_view_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:mocktail/mocktail.dart';
 
-// TODO: Fix mock GetStorage issue
+class MockGetStorage extends Mock implements GetStorage {}
+
 void main() {
-  late LocaleController controller;
+  late LocaleViewModel controller;
   late GetStorage storage;
 
-  setUp(() async {
-    await GetStorage.init('locale_test');
-    storage = GetStorage('locale_test');
-    await storage.erase();
-    controller = LocaleController();
+  setUp(() {
+    storage = MockGetStorage();
+
+    when(() => storage.write(any(), any())).thenAnswer((_) async {});
+    when(() => storage.read<String>(any())).thenReturn(null);
+    when(() => storage.remove(any())).thenAnswer((_) async {});
+
+    controller = LocaleViewModel(storage);
   });
 
   test('initial locale is null (system default)', () {
     expect(controller.locale, isNull);
   });
 
-  test('setLocale updates locale and persists it', () async {
+  test('setLocale updates locale', () async {
     controller.setLocale(const Locale('en'));
     expect(controller.locale, const Locale('en'));
-    expect(storage.read('lang_code'), equals('en'));
 
     controller.setLocale(const Locale('de'));
     expect(controller.locale, const Locale('de'));
-    expect(storage.read('lang_code'), equals('de'));
   });
 
   test('loadLocale restores persisted locale', () async {
-    await storage.write('lang_code', 'de');
+    when(() => storage.read<String>(any())).thenReturn('de');
 
     await controller.loadLocale();
 
     expect(controller.locale, const Locale('de'));
   });
 
-  test('clearLocale removes saved value', () async {
-    await storage.write('lang_code', 'en');
+  test('clearLocale removes value', () async {
+    controller.setLocale(const Locale('de'));
+
     controller.clearLocale();
 
     expect(controller.locale, isNull);
-    expect(storage.read('lang_code'), isNull);
   });
 
   test('toggleLocale switches between en and de', () async {

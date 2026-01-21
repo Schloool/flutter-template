@@ -1,5 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter_template/core/util/logger.dart';
+import 'package:flutter_template/shared/logger.dart';
 
 import 'firebase_options.dart';
 
