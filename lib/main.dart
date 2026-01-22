@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_template/app.dart';
-import 'package:flutter_template/core/firebase/auth/controller/auth_controller.dart';
 import 'package:flutter_template/core/firebase/auth/service/firebase_auth_service.dart';
+import 'package:flutter_template/core/firebase/auth/view_model/auth_view_model.dart';
 import 'package:flutter_template/core/firebase/firebase_initializer.dart';
 import 'package:flutter_template/core/firebase/firestore/firestore_initializer.dart';
 import 'package:flutter_template/core/i10n/locale_view_model.dart';
@@ -26,9 +26,9 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider<FirebaseAuthController>(
+        ChangeNotifierProvider<FirebaseAuthViewModel>(
           create: (_) {
-            return FirebaseAuthController(FirebaseAuthService());
+            return FirebaseAuthViewModel(FirebaseAuthService());
           },
         ),
         ChangeNotifierProvider<ThemeController>(

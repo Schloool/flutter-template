@@ -6,8 +6,8 @@ import 'package:flutter_template/core/firebase/auth/service/auth_service.dart';
 
 import '../../../../shared/logger.dart';
 
-class FirebaseAuthController extends ChangeNotifier {
-  FirebaseAuthController(this._authService) {
+class FirebaseAuthViewModel extends ChangeNotifier {
+  FirebaseAuthViewModel(this._authService) {
     _listenToAuthChanges();
   }
 
