@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_template/core/i10n/locale_view_model.dart';
+import 'package:flutter_template/routing.dart';
 import 'package:provider/provider.dart';
 
 import 'core/theme/app_theme.dart';
 import 'core/theme/theme_view_model.dart';
-import 'features/counter/view/counter_screen.dart';
 import 'generated/l10n.dart';
 
 class App extends StatelessWidget {
@@ -15,15 +15,15 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeController = context.watch<ThemeController>();
-    final locale = context.watch<LocaleViewModel>();
+    final themeViewModel = context.watch<ThemeViewModel>();
+    final localeViewModel = context.watch<LocaleViewModel>();
 
-    return MaterialApp(
+    return MaterialApp.router(
       title: appName,
-      themeMode: themeController.themeMode,
+      themeMode: themeViewModel.themeMode,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
-      locale: locale.locale,
+      locale: localeViewModel.locale,
       localizationsDelegates: const [
         S.delegate,
         GlobalMaterialLocalizations.delegate,
@@ -31,7 +31,7 @@ class App extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: S.delegate.supportedLocales,
-      home: const CounterScreen(),
+      routerConfig: router,
     );
   }
 }

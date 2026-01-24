@@ -12,7 +12,7 @@ class CounterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final counter = context.watch<CounterViewModel>();
-    final theme = context.watch<ThemeController>();
+    final theme = context.watch<ThemeViewModel>();
 
     return Scaffold(
       body: Center(

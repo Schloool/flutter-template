@@ -15,9 +15,9 @@ class MockGetStorage extends Mock implements GetStorage {}
 Future<void> pumpApp(
   WidgetTester tester,
   Widget child, {
-  ThemeController? themeController,
-  LocaleViewModel? localeController,
-  CounterViewModel? counterController,
+  ThemeViewModel? themeViewModel,
+  LocaleViewModel? localeViewModel,
+  CounterViewModel? counterViewModel,
   CounterRepository? counterRepository,
 }) async {
   await tester.pumpWidget(
@@ -25,18 +25,18 @@ Future<void> pumpApp(
       providers: [
         ChangeNotifierProvider.value(
           value:
-              themeController ?? ThemeController(MockGetStorage())
+              themeViewModel ?? ThemeViewModel(MockGetStorage())
                 ..loadThemeMode(),
         ),
         ChangeNotifierProvider.value(
           value:
-              localeController ?? LocaleViewModel(MockGetStorage())
+              localeViewModel ?? LocaleViewModel(MockGetStorage())
                 ..loadLocale(),
         ),
         ChangeNotifierProvider(
           create:
               (_) =>
-                  counterController ??
+                  counterViewModel ??
                         CounterViewModel(
                           counterRepository ?? FakeCounterRepository()
                             ..getInitialCount(),

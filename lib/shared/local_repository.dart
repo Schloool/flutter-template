@@ -47,6 +47,40 @@ abstract class LocalRepository {
     }
   }
 
+  Result<List<D>> readModelListToDomain<T, D>(
+    String key,
+    T Function(Map<String, dynamic>) fromMap,
+    D Function(T) toDomain,
+  ) {
+    try {
+      final entries =
+          storage
+              .read<List<Map<String, dynamic>>>(key)
+              ?.map((e) => fromMap(e))
+              .toList();
+
+      if (entries == null) {
+        return const Result.success([]);
+      }
+
+      return Result.success(entries.map((e) => toDomain(e)).toList());
+    } catch (e) {
+      return const Result.failure('Failed to parse favorites');
+    }
+  }
+
+  Future<void> writeModelList<T, D>(
+    String key,
+    List<D> entries,
+    T Function(D) fromDomain,
+    Map<String, dynamic> Function(T) toMap,
+  ) {
+    return storage.write(
+      key,
+      entries.map((e) => toMap(fromDomain(e))).toList(),
+    );
+  }
+
   /// Helper method to write a value and wrap it in a [Result].
   Future<Result> writeValue(String key, dynamic value) async {
     try {

@@ -7,7 +7,7 @@ import 'package:mocktail/mocktail.dart';
 class MockGetStorage extends Mock implements GetStorage {}
 
 void main() {
-  late ThemeController controller;
+  late ThemeViewModel viewModel;
   late GetStorage storage;
 
   setUp(() {
@@ -16,44 +16,44 @@ void main() {
     when(() => storage.read(any())).thenReturn(null);
     when(() => storage.remove(any())).thenAnswer((_) async {});
 
-    controller = ThemeController(storage);
+    viewModel = ThemeViewModel(storage);
   });
 
-  test('initial themeMode is system', () {
-    expect(controller.themeMode, equals(ThemeMode.system));
+  test('initial themeMode is loaded from default', () {
+    expect(viewModel.themeMode, equals(ThemeViewModel.defaultTheme));
   });
 
   test('setThemeMode updates value', () {
-    controller.setThemeMode(ThemeMode.dark);
-    expect(controller.themeMode, ThemeMode.dark);
+    viewModel.setThemeMode(ThemeMode.dark);
+    expect(viewModel.themeMode, ThemeMode.dark);
 
-    controller.setThemeMode(ThemeMode.light);
-    expect(controller.themeMode, ThemeMode.light);
+    viewModel.setThemeMode(ThemeMode.light);
+    expect(viewModel.themeMode, ThemeMode.light);
   });
 
   test('toggleTheme switches between light and dark', () {
-    controller.setThemeMode(ThemeMode.light);
-    controller.toggleTheme();
+    viewModel.setThemeMode(ThemeMode.light);
+    viewModel.toggleTheme();
 
-    expect(controller.themeMode, ThemeMode.dark);
+    expect(viewModel.themeMode, ThemeMode.dark);
 
-    controller.toggleTheme();
-    expect(controller.themeMode, ThemeMode.light);
+    viewModel.toggleTheme();
+    expect(viewModel.themeMode, ThemeMode.light);
   });
 
   test('loadThemeMode restores persisted mode', () async {
     when(() => storage.read<bool>(any())).thenReturn(true);
 
-    await controller.loadThemeMode();
-    expect(controller.themeMode, ThemeMode.dark);
+    await viewModel.loadThemeMode();
+    expect(viewModel.themeMode, ThemeMode.dark);
   });
 
   test('notifies listeners on change', () async {
     int notifyCount = 0;
-    controller.addListener(() => notifyCount++);
+    viewModel.addListener(() => notifyCount++);
 
-    controller.setThemeMode(ThemeMode.dark);
-    controller.toggleTheme();
+    viewModel.setThemeMode(ThemeMode.dark);
+    viewModel.toggleTheme();
 
     expect(notifyCount, greaterThan(0));
   });

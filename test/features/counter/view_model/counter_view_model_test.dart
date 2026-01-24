@@ -6,32 +6,32 @@ import 'package:mocktail/mocktail.dart';
 class MockCounterRepository extends Mock implements CounterRepository {}
 
 void main() {
-  late CounterViewModel controller;
+  late CounterViewModel viewModel;
   late MockCounterRepository repository;
 
   setUp(() {
     repository = MockCounterRepository();
-    controller = CounterViewModel(repository);
+    viewModel = CounterViewModel(repository);
   });
 
   test('loadInitialCount loads initial value and updates isLoading', () async {
     when(() => repository.getInitialCount()).thenAnswer((_) async => 5);
 
     final states = <bool>[];
-    controller.addListener(() => states.add(controller.isLoading));
+    viewModel.addListener(() => states.add(viewModel.isLoading));
 
-    await controller.loadInitialCount();
+    await viewModel.loadInitialCount();
 
-    expect(controller.data?.value, 5);
+    expect(viewModel.data?.value, 5);
     expect(states, [true, false]);
   });
 
   test('increment increases count', () async {
     when(() => repository.getInitialCount()).thenAnswer((_) async => 0);
-    await controller.loadInitialCount();
+    await viewModel.loadInitialCount();
 
-    controller.increment();
+    viewModel.increment();
 
-    expect(controller.data?.value, 1);
+    expect(viewModel.data?.value, 1);
   });
 }

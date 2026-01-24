@@ -6,15 +6,15 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../../util/mock_helpers.dart';
 
 void main() {
-  late CounterViewModel controller;
+  late CounterViewModel viewModel;
 
   setUp(() async {
-    controller = CounterViewModel(FakeCounterRepository());
-    await controller.loadInitialCount();
+    viewModel = CounterViewModel(FakeCounterRepository());
+    await viewModel.loadInitialCount();
   });
 
   testWidgets('CounterScreen displays initial count and FABs', (tester) async {
-    await pumpApp(tester, const CounterScreen(), counterController: controller);
+    await pumpApp(tester, const CounterScreen(), counterViewModel: viewModel);
     await tester.pumpAndSettle();
 
     expect(find.text('0'), findsOneWidget);
@@ -25,7 +25,7 @@ void main() {
   });
 
   testWidgets('Increment button increases count', (tester) async {
-    await pumpApp(tester, const CounterScreen(), counterController: controller);
+    await pumpApp(tester, const CounterScreen(), counterViewModel: viewModel);
     await tester.pumpAndSettle();
 
     await tester.tap(find.byIcon(Icons.add));

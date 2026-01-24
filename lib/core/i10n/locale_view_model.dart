@@ -4,6 +4,7 @@ import 'package:get_storage/get_storage.dart';
 class LocaleViewModel extends ChangeNotifier {
   LocaleViewModel(this._storage);
 
+  static const defaultLocaleCode = 'de';
   static const _langCodeKey = 'lang_code';
 
   final GetStorage _storage;
@@ -15,11 +16,7 @@ class LocaleViewModel extends ChangeNotifier {
   Future<void> loadLocale() async {
     final savedLang = _storage.read<String>(_langCodeKey);
 
-    if (savedLang != null && savedLang.isNotEmpty) {
-      _locale = Locale(savedLang);
-    } else {
-      _locale = null;
-    }
+    _locale = Locale(savedLang ?? defaultLocaleCode);
 
     notifyListeners();
   }

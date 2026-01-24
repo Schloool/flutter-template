@@ -31,9 +31,9 @@ void main() async {
             return FirebaseAuthViewModel(FirebaseAuthService());
           },
         ),
-        ChangeNotifierProvider<ThemeController>(
+        ChangeNotifierProvider<ThemeViewModel>(
           create: (_) {
-            return ThemeController(getStorage)..loadThemeMode();
+            return ThemeViewModel(getStorage)..loadThemeMode();
           },
         ),
         ChangeNotifierProvider<LocaleViewModel>(
